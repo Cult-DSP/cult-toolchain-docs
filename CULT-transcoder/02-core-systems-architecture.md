@@ -1,17 +1,17 @@
 # Core Systems Architecture
 
 ```mermaid
-%%{init: {"theme":"base","themeVariables": {"background":"#ffffff","primaryColor":"#ffffff","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","primaryTextColor":"#111827","edgeLabelBackground":"#ffffff","lineColor":"#e6e6e6","fontFamily":"Inter, Arial, sans-serif","fontSize":"14px"}}}%%
+%%{init: {"theme":"base","themeVariables": {"background":"#ffffff","primaryColor":"#ffffff","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","primaryTextColor":"#111827","edgeLabelBackground":"#ffffff","lineColor":"#000000","fontFamily":"Inter, Arial, sans-serif","fontSize":"15px","clusterTitleFontSize":"20px","clusterBorderColor":"#000000","clusterBkg":"#ffffff","clusterBorderWidth":"3px"}}}%%
 flowchart TB
     %% layout groups with some spacing hints
-    subgraph InputLayer["Input Detection and Source Opening"]
+    subgraph InputLayer["**Input Detection and Source Opening**"]
         direction TB
         D1["Format detection"]
         D2["Dispatch"]
         D3["Source open"]
     end
 
-    subgraph DomainReaders["Format-specific extraction"]
+    subgraph DomainReaders["**Format-specific extraction**"]
         direction TB
         A1["ADM XML parser"]
         A2["BW64 / AXML extractor"]
@@ -19,7 +19,7 @@ flowchart TB
         A4["MPEG-H decode backend"]
     end
 
-    subgraph CanonicalCore["Canonical scene layer"]
+    subgraph CanonicalCore["**Canonical scene layer**"]
         direction TB
         C1["Internal scene\nnormalization"]
         C2["Stable IDs"]
@@ -30,7 +30,7 @@ flowchart TB
         C7["Loss ledger"]
     end
 
-    subgraph OutputLayer["Outputs"]
+    subgraph OutputLayer["**Outputs**"]
         direction TB
         O1["scene.lusid.json"]
         O2["report.json"]
@@ -63,11 +63,11 @@ flowchart TB
     C7 --> O2
 
     %% clean, white node styles
-    classDef groupTitle fill:#ffffff,stroke:none,color:#111827,font-weight:700,font-size:15px,text-align:center
-    classDef inputNode fill:#ffffff,stroke:#d1d5db,stroke-width:2px,color:#111827,font-weight:700
-    classDef domainNode fill:#ffffff,stroke:#d1d5db,stroke-width:2px,color:#111827,font-weight:700
-    classDef coreNode fill:#ffffff,stroke:#d1d5db,stroke-width:2px,color:#111827,font-weight:700
-    classDef outputNode fill:#ffffff,stroke:#d1d5db,stroke-width:2px,color:#111827,font-weight:700
+    classDef groupTitle fill:#ffffff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700,font-size:15px,text-align:center
+    classDef inputNode fill:#ffffff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef domainNode fill:#ffffff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef coreNode fill:#ffffff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef outputNode fill:#ffffff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
 
     %% subgraph titles are handled by Mermaid (bracketed labels)
     class D1,D2,D3 inputNode
@@ -76,6 +76,5 @@ flowchart TB
     class O1,O2 outputNode
 
     %% subtle link styling
-    linkStyle default stroke:#e6e6e6,stroke-width:1px
-    linkStyle 0 stroke:#cfd8dc,stroke-width:1px
+    linkStyle default stroke:#000000,stroke-width:2px
 ```

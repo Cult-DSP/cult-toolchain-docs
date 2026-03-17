@@ -1,0 +1,80 @@
+%%{init: {"theme":"base","themeVariables": {"background":"#ffffff","primaryColor":"#ffffff","secondaryColor":"#ffffff","tertiaryColor":"#ffffff","primaryTextColor":"#111827","edgeLabelBackground":"#ffffff","lineColor":"#000000","fontFamily":"Inter, Arial, sans-serif","fontSize":"15px","clusterTitleFontSize":"20px","clusterBorderColor":"#000000","clusterBkg":"#ffffff","clusterBorderWidth":"1px","clusterTitleFontWeight":"bold"}}}%%
+flowchart TB
+%% layout groups with some spacing hints
+subgraph InputLayer["<div style='display:block;width:100%;padding-left:0;padding-right:70%;text-align:center;font-weight:700;box-sizing:border-box;'>Input Detection and Source Opening</div>"]
+direction TB
+D1["Format detection"]
+D2["Dispatch"]
+D3["Source open"]
+end
+style InputLayer fill:#ffffff,stroke:#000000,stroke-width:1px,text-align:center
+
+    subgraph DomainReaders["<div style='display:block;width:100%;padding-left:0;padding-right:80%;text-align:center;font-weight:700;box-sizing:border-box;'>Format-specific extraction</div>"]
+        direction TB
+        A1["ADM XML parser"]
+        A2["BW64 / AXML extractor"]
+        A3["Sony 360RA ADM profile branch"]
+        A4["MPEG-H decode backend"]
+    end
+    style DomainReaders fill:#ffffff,stroke:#000000,stroke-width:1px,text-align:center
+
+    subgraph CanonicalCore["<div style='display:block;width:100%;padding-left:0;padding-right:40%;text-align:center;font-weight:700;box-sizing:border-box;'>Canonical scene layer</div>"]
+        direction TB
+        C1["Internal scene\nnormalization"]
+        C2["Stable IDs"]
+        C3["Node typing"]
+        C4["Frame creation"]
+        C5["Coordinate /\ndirect-speaker mapping"]
+        C6["Summary metadata"]
+        C7["Loss ledger"]
+    end
+    style CanonicalCore fill:#ffffff,stroke:#000000,stroke-width:1px,text-align:center
+
+    subgraph OutputLayer["<div style='display:block;width:100%;padding:16px 50% 0 0;text-align:center;font-weight:700;box-sizing:border-box;'>Outputs</div>"]
+        direction TB
+        O1["scene.lusid.json"]
+        O2["report.json"]
+    end
+    style OutputLayer fill:#ffffff,stroke:#000000,stroke-width:1px,text-align:center
+
+    %% connections
+    D1 --> D2 --> D3
+    D3 --> A1
+    D3 --> A2
+    D3 --> A3
+    D3 --> A4
+
+    A1 --> C1
+    A2 --> C1
+    A3 --> C1
+    A4 --> C1
+
+    C1 --> C2
+    C1 --> C3
+    C1 --> C4
+    C1 --> C5
+    C1 --> C6
+    C1 --> C7
+
+    C2 --> O1
+    C3 --> O1
+    C4 --> O1
+    C5 --> O1
+    C6 --> O2
+    C7 --> O2
+
+    %% clean, white node styles
+    classDef groupTitle fill:#ffffff,stroke:#000000,stroke-width:1px,color:#111827,font-weight:700,font-size:15px,text-align:center
+    classDef inputNode fill:#e6e6ff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef domainNode fill:#e6e6ff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef coreNode fill:#e6e6ff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+    classDef outputNode fill:#e6e6ff,stroke:#000000,stroke-width:3px,color:#111827,font-weight:700
+
+    %% subgraph titles are handled by Mermaid (bracketed labels)
+    class D1,D2,D3 inputNode
+    class A1,A2,A3,A4 domainNode
+    class C1,C2,C3,C4,C5,C6,C7 coreNode
+    class O1,O2 outputNode
+
+    %% subtle link styling
+    linkStyle default stroke:#000000,stroke-width:2px
